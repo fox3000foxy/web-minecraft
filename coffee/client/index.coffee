@@ -1,12 +1,17 @@
 
 import Engine from 'noa-engine'
 import { io } from 'socket.io-client'
+import pChunk from 'prismarine-chunk'
+Chunk=pChunk "1.16.3"
 
 socket=io ":8081"
 
 socket.on "connect",()->
 	console.log "connected"
 	socket.emit "initClient","noaPlayer"
+	socket.on "mapChunk",(json)->
+		ch=Chunk.fromJson json
+		console.log ch.sections
 	socket.on "disconnect",()->
 		console.log "disconnected"
 
