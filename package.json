@@ -9,10 +9,10 @@
     "@babylonjs/core": "^4.2.0",
     "http": "0.0.1-security",
     "mineflayer": "^2.40.1",
-    "noa-engine": "^0.28.0",
     "prismarine-chunk": "^1.22.0",
     "socket.io": "^3.0.4",
-    "socket.io-client": "^3.0.4"
+    "socket.io-client": "^3.0.4",
+    "noa-engine": "github:andyhall/noa#develop"
   },
   "devDependencies": {
     "webpack": "^4.44.2",

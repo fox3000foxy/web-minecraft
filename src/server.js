@@ -43,7 +43,7 @@
         var cell;
         cell = new Chunk();
         cell.load(packet.chunkData, packet.bitMap);
-        socket.emit("mapChunk", cell.toJson());
+        socket.emit("mapChunk", cell.toJson(), packet.x, packet.z);
       });
     });
     socket.on("disconnect", function() {

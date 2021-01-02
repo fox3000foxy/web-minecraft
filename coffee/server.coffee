@@ -26,7 +26,7 @@ io.sockets.on "connection", (socket)->
 		si[socket.id].bot._client.on "map_chunk",(packet)->
 			cell=new Chunk()
 			cell.load packet.chunkData,packet.bitMap
-			socket.emit "mapChunk",cell.toJson()
+			socket.emit "mapChunk",cell.toJson(),packet.x,packet.z
 			return
 		return
 	socket.on "disconnect",()->
