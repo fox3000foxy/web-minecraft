@@ -6,6 +6,7 @@ socket=io ":8081"
 
 socket.on "connect",()->
 	console.log "connected"
+	socket.emit "initClient","noaPlayer"
 	socket.on "disconnect",()->
 		console.log "disconnected"
 

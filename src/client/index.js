@@ -11,6 +11,7 @@ socket = io(":8081");
 
 socket.on("connect", function() {
   console.log("connected");
+  socket.emit("initClient", "noaPlayer");
   return socket.on("disconnect", function() {
     return console.log("disconnected");
   });
