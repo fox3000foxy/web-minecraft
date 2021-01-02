@@ -1,12 +1,16 @@
 {
   "name": "web-minecraft",
   "scripts": {
-    "start": "cd src && webpack serve",
-    "coffee": "coffee -o src/ -cw coffee/"
+    "start": "cd src/client && webpack serve",
+    "coffee": "coffee -o src/ -cw coffee/",
+    "server": "node src/server"
   },
   "dependencies": {
     "@babylonjs/core": "^4.2.0",
-    "noa-engine": "^0.28.0"
+    "http": "0.0.1-security",
+    "noa-engine": "^0.28.0",
+    "socket.io": "^3.0.4",
+    "socket.io-client": "^3.0.4"
   },
   "devDependencies": {
     "webpack": "^4.44.2",

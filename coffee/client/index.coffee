@@ -1,12 +1,21 @@
 
 import Engine from 'noa-engine'
+import { io } from 'socket.io-client'
+
+socket=io ":8081"
+
+socket.on "connect",()->
+	console.log "connected"
+	socket.on "disconnect",()->
+		console.log "disconnected"
 
 noa = new Engine
 	debug: true
 	showFPS: true
-	chunkSize: 32
-	chunkAddDistance: 2.5
-	chunkRemoveDistance: 3.5
+	chunkSize: 16
+	chunkAddDistance: 6
+	chunkRemoveDistance: 6
+	useAO: true
 
 textureURL = null
 brownish = [0.45, 0.36, 0.22]
