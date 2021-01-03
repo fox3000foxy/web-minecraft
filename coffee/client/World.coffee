@@ -19,7 +19,6 @@ class World
 			_this.noa.world.setChunkData id, data
 			return
 		@noa.world.on "playerEnteredChunk",(ci,cj,ck)->
-			console.log ci,cj,ck
 			add = _this.noa.world.chunkAddDistance
 			for i in [ci-add..ci+add]
 				for j in [cj-add..cj+add]
@@ -38,17 +37,14 @@ class World
 					_this.noa.world.manuallyUnloadChunk(loc[0] * 16, loc[1] * 16, loc[2] * 16)
 				return
 			return
-		setInterval ()->
-			if not _this.noa.world.playerChunkLoaded
-				console.log "Updating Player Chunk!"
-				pos = _this.noa.ents.getPosition(_this.noa.playerEntity)
-				i = Math.ceil(pos[0] / 16)
-				j = Math.ceil(pos[1] / 16)
-				k = Math.ceil(pos[2] / 16)
-				if _this.chunkStorage["#{i}|#{j}|#{k}|default"] isnt undefined
-					_this.noa.world.manuallyLoadChunk i*16,j*16,k*16
-			return
-		,100
+		textureURL = null
+		brownish = [0.45, 0.36, 0.22]
+		greenish = [0.1, 0.8, 0.2]
+		@noa.registry.registerMaterial 'dirt', brownish, textureURL
+		@noa.registry.registerMaterial 'grass', greenish, textureURL
+
+		dirtID = @noa.registry.registerBlock 1, { material: 'dirt' }
+		grassID = @noa.registry.registerBlock 2, { material: 'grass' }
 		return
 	loadChunk:(chunk,x,z)->
 		ch=@Chunk.fromJson chunk

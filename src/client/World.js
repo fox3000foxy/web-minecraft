@@ -9,7 +9,7 @@ import ndarray from "ndarray";
 
 World = class World {
   constructor(noa) {
-    var _this;
+    var _this, brownish, dirtID, grassID, greenish, textureURL;
     _this = this;
     this.noa = noa;
     this.Chunk = pChunk("1.16.3");
@@ -29,7 +29,6 @@ World = class World {
     });
     this.noa.world.on("playerEnteredChunk", function(ci, cj, ck) {
       var add, dist, i, j, k, l, m, n, ref, ref1, ref2, ref3, ref4, ref5;
-      console.log(ci, cj, ck);
       add = _this.noa.world.chunkAddDistance;
       for (i = l = ref = ci - add, ref1 = ci + add; (ref <= ref1 ? l <= ref1 : l >= ref1); i = ref <= ref1 ? ++l : --l) {
         for (j = m = ref2 = cj - add, ref3 = cj + add; (ref2 <= ref3 ? m <= ref3 : m >= ref3); j = ref2 <= ref3 ? ++m : --m) {
@@ -56,19 +55,17 @@ World = class World {
         }
       });
     });
-    setInterval(function() {
-      var i, j, k, pos;
-      if (!_this.noa.world.playerChunkLoaded) {
-        console.log("Updating Player Chunk!");
-        pos = _this.noa.ents.getPosition(_this.noa.playerEntity);
-        i = Math.ceil(pos[0] / 16);
-        j = Math.ceil(pos[1] / 16);
-        k = Math.ceil(pos[2] / 16);
-        if (_this.chunkStorage[`${i}|${j}|${k}|default`] !== void 0) {
-          _this.noa.world.manuallyLoadChunk(i * 16, j * 16, k * 16);
-        }
-      }
-    }, 100);
+    textureURL = null;
+    brownish = [0.45, 0.36, 0.22];
+    greenish = [0.1, 0.8, 0.2];
+    this.noa.registry.registerMaterial('dirt', brownish, textureURL);
+    this.noa.registry.registerMaterial('grass', greenish, textureURL);
+    dirtID = this.noa.registry.registerBlock(1, {
+      material: 'dirt'
+    });
+    grassID = this.noa.registry.registerBlock(2, {
+      material: 'grass'
+    });
     return;
   }
 

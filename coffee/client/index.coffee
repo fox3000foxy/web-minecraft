@@ -1,10 +1,10 @@
 
 import Engine from 'noa-engine'
 import { io } from 'socket.io-client'
-import { Mesh } from '@babylonjs/core/Meshes/mesh'
-import '@babylonjs/core/Meshes/Builders/boxBuilder'
 import {World} from "./World"
+import {Player} from "./Player"
 import * as BABYLON from '@babylonjs/core/Legacy/legacy'
+import $ from "jquery"
 
 socket=io ":8081"
 
@@ -19,26 +19,7 @@ noa=new Engine
 	manuallyControlChunkLoading: true
 
 world=new World noa
-
-console.log noa
-
-textureURL = null
-brownish = [0.45, 0.36, 0.22]
-greenish = [0.1, 0.8, 0.2]
-noa.registry.registerMaterial 'dirt', brownish, textureURL
-noa.registry.registerMaterial 'grass', greenish, textureURL
-
-dirtID = noa.registry.registerBlock 1, { material: 'dirt' }
-grassID = noa.registry.registerBlock 2, { material: 'grass' }
-
-player = noa.playerEntity
-dat = noa.entities.getPositionData player
-w = dat.width
-h = dat.height
-
-
-movePlayer=(x,y,z)->
-	noa.entities.setPosition player,[x,y,z]
+player=new Player noa
 
 socket.on "connect",()->
 	console.log "connected"
@@ -47,60 +28,15 @@ socket.on "connect",()->
 		world.loadChunk chunk,x,z
 		return
 	socket.on "move",(x,y,z)->
-		console.log x,y,z
-		movePlayer x,y,z
+		player.updatePosition x,y,z
 		return
 	socket.on "disconnect",()->
 		console.log "disconnected"
 		return
 	return
 
-#Force stop player
-setInterval ()->
-	camB=noa.physics.bodies[0]
-	camB.velocity[0]=0
-	camB.velocity[1]=0
-	camB.velocity[2]=0
-	camB._forces[0]=0
-	camB._forces[1]=0
-	camB._forces[2]=0
-	camB._impulses[0]=0
-	camB._impulses[1]=0
-	camB._impulses[2]=0
-	camB.gravityMultiplier=0
-
 scene = noa.rendering.getScene()
 scene.fogMode=BABYLON.Scene.FOGMODE_LINEAR
 scene.fogStart = 4*16
 scene.fogEnd = 5*16
-scene.fogColor = new BABYLON.Color3(204/255, 232/255, 255/255)
-mesh = Mesh.CreateBox 'player-mesh', 0, scene
-mesh.scaling.x = w
-mesh.scaling.z = w
-mesh.scaling.y = h
-
-noa.entities.addComponent player, noa.entities.names.mesh,
-    mesh: mesh
-    offset: [0, h / 2, 0]
-
-noa.inputs.down.on 'fire',()->
-	if noa.targetedBlock
-		noa.setBlock 0, noa.targetedBlock.position
-	return
-
-noa.inputs.down.on 'alt-fire',()->
-	if noa.targetedBlock
-		noa.addBlock grassID, noa.targetedBlock.adjacent
-	return
-
-noa.inputs.bind 'alt-fire', 'E'
-
-noa.on 'tick',(dt)->
-	scroll=noa.inputs.state.scrolly
-	if scroll isnt 0
-		noa.camera.zoomDistance += if scroll>0 then 1 else -1
-		if noa.camera.zoomDistance < 0
-			noa.camera.zoomDistance=0
-		if noa.camera.zoomDistance > 10
-			noa.camera.zoomDistance=10
-	return
+scene.fogColor = new BABYLON.Color3 204/255, 232/255, 255/255
