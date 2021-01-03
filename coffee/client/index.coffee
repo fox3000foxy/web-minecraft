@@ -4,6 +4,7 @@ import { io } from 'socket.io-client'
 import { Mesh } from '@babylonjs/core/Meshes/mesh'
 import '@babylonjs/core/Meshes/Builders/boxBuilder'
 import {World} from "./World"
+import * as BABYLON from '@babylonjs/core/Legacy/legacy'
 
 socket=io ":8081"
 
@@ -45,6 +46,10 @@ w = dat.width
 h = dat.height
 
 scene = noa.rendering.getScene()
+scene.fogMode=BABYLON.Scene.FOGMODE_LINEAR
+scene.fogStart = 4*16
+scene.fogEnd = 5*16
+scene.fogColor = new BABYLON.Color3(204/255, 232/255, 255/255)
 mesh = Mesh.CreateBox 'player-mesh', 1, scene
 mesh.scaling.x = w
 mesh.scaling.z = w

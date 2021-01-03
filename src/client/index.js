@@ -17,6 +17,8 @@ import {
   World
 } from "./World";
 
+import * as BABYLON from '@babylonjs/core/Legacy/legacy';
+
 socket = io(":8081");
 
 noa = new Engine({
@@ -70,6 +72,14 @@ w = dat.width;
 h = dat.height;
 
 scene = noa.rendering.getScene();
+
+scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
+
+scene.fogStart = 4 * 16;
+
+scene.fogEnd = 5 * 16;
+
+scene.fogColor = new BABYLON.Color3(204 / 255, 232 / 255, 255 / 255);
 
 mesh = Mesh.CreateBox('player-mesh', 1, scene);
 
