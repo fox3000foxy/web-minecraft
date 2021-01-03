@@ -12,8 +12,8 @@ noa=new Engine
 	showFPS: true
 	chunkSize: 16
 	playerStart: [0.5, 100, 0.5]
-	chunkAddDistance: 7
-	chunkRemoveDistance: 7
+	chunkAddDistance: 6
+	chunkRemoveDistance: 6
 	useAO: true
 	manuallyControlChunkLoading: true
 
