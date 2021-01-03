@@ -45,6 +45,9 @@
         cell.load(packet.chunkData, packet.bitMap);
         socket.emit("mapChunk", cell.toJson(), packet.x, packet.z);
       });
+      si[socket.id].bot.on("move", function(pos) {
+        return socket.emit("move", pos.x, pos.y, pos.z);
+      });
     });
     socket.on("disconnect", function() {
       console.log(`[\x1b[31m-\x1b[0m] ${si[socket.id].nick}`);

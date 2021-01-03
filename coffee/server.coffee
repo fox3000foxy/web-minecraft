@@ -28,6 +28,8 @@ io.sockets.on "connection", (socket)->
 			cell.load packet.chunkData,packet.bitMap
 			socket.emit "mapChunk",cell.toJson(),packet.x,packet.z
 			return
+		si[socket.id].bot.on "move",(pos)->
+			socket.emit "move",pos.x,pos.y,pos.z
 		return
 	socket.on "disconnect",()->
 		console.log "[\x1b[31m-\x1b[0m] #{si[socket.id].nick}"

@@ -20,16 +20,7 @@ noa=new Engine
 
 world=new World noa
 
-socket.on "connect",()->
-	console.log "connected"
-	socket.emit "initClient","noaPlayer"
-	socket.on "mapChunk",(chunk,x,z)->
-		world.loadChunk chunk,x,z
-		return
-	socket.on "disconnect",()->
-		console.log "disconnected"
-		return
-	return
+console.log noa
 
 textureURL = null
 brownish = [0.45, 0.36, 0.22]
@@ -45,12 +36,45 @@ dat = noa.entities.getPositionData player
 w = dat.width
 h = dat.height
 
+
+movePlayer=(x,y,z)->
+	noa.entities.setPosition player,[x,y,z]
+
+socket.on "connect",()->
+	console.log "connected"
+	socket.emit "initClient","noaPlayer"
+	socket.on "mapChunk",(chunk,x,z)->
+		world.loadChunk chunk,x,z
+		return
+	socket.on "move",(x,y,z)->
+		console.log x,y,z
+		movePlayer x,y,z
+		return
+	socket.on "disconnect",()->
+		console.log "disconnected"
+		return
+	return
+
+#Force stop player
+setInterval ()->
+	camB=noa.physics.bodies[0]
+	camB.velocity[0]=0
+	camB.velocity[1]=0
+	camB.velocity[2]=0
+	camB._forces[0]=0
+	camB._forces[1]=0
+	camB._forces[2]=0
+	camB._impulses[0]=0
+	camB._impulses[1]=0
+	camB._impulses[2]=0
+	camB.gravityMultiplier=0
+
 scene = noa.rendering.getScene()
 scene.fogMode=BABYLON.Scene.FOGMODE_LINEAR
 scene.fogStart = 4*16
 scene.fogEnd = 5*16
 scene.fogColor = new BABYLON.Color3(204/255, 232/255, 255/255)
-mesh = Mesh.CreateBox 'player-mesh', 1, scene
+mesh = Mesh.CreateBox 'player-mesh', 0, scene
 mesh.scaling.x = w
 mesh.scaling.z = w
 mesh.scaling.y = h
