@@ -43,7 +43,7 @@ class Player
 			return
 		return
 	updatePosition:(x,y,z)->
-		@noa.entities.setPosition @player,[x,y,z]
+		@noa.entities.setPosition @player,[-x,y,z]
 		return
 	resetForces:()->
 		@body.velocity[0]=0

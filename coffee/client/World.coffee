@@ -15,7 +15,7 @@ class World
 			for ix in [0..15]
 				for iy in [0..15]
 					for iz in [0..15]
-						data.set ix,iy,iz,noaChunk.get ix,iy,iz
+						data.set ix,iy,iz,noaChunk.get 15-ix,iy,iz
 			_this.noa.world.setChunkData id, data
 			return
 		@noa.world.on "playerEnteredChunk",(ci,cj,ck)->
@@ -47,6 +47,8 @@ class World
 		grassID = @noa.registry.registerBlock 2, { material: 'grass' }
 		return
 	loadChunk:(chunk,x,z)->
+		console.log x,z
+		x=-x-1
 		ch=@Chunk.fromJson chunk
 		for y in [0..ch.sections.length-1]
 			noaChunk=new ndarray new Uint16Array(16*16*16),[16, 16, 16]

@@ -57,7 +57,7 @@ Player = class Player {
   }
 
   updatePosition(x, y, z) {
-    this.noa.entities.setPosition(this.player, [x, y, z]);
+    this.noa.entities.setPosition(this.player, [-x, y, z]);
   }
 
   resetForces() {
