@@ -34,6 +34,9 @@ io.sockets.on "connection", (socket)->
 	socket.on "move",(state,toggle)->
 		si[socket.id].bot.setControlState state,toggle
 		return
+	socket.on "look",(yaw,pitch)->
+		si[socket.id].bot.look yaw,pitch
+		return
 	socket.on "disconnect",()->
 		console.log "[\x1b[31m-\x1b[0m] #{si[socket.id].nick}"
 		si[socket.id].bot.end()

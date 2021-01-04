@@ -20,6 +20,15 @@ noa=new Engine
 
 console.log noa
 
+animate=()->
+	requestAnimationFrame animate
+	dir=noa.camera.getDirection()
+	pitch=noa.camera.pitch
+	yaw=noa.camera.heading
+	socket.emit "look",-yaw+Math.PI,-pitch
+	return
+animate()
+
 world=new World noa
 player=new Player noa
 

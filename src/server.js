@@ -52,6 +52,9 @@
     socket.on("move", function(state, toggle) {
       si[socket.id].bot.setControlState(state, toggle);
     });
+    socket.on("look", function(yaw, pitch) {
+      si[socket.id].bot.look(yaw, pitch);
+    });
     socket.on("disconnect", function() {
       console.log(`[\x1b[31m-\x1b[0m] ${si[socket.id].nick}`);
       si[socket.id].bot.end();
