@@ -2,12 +2,15 @@
 import pChunk from 'prismarine-chunk'
 import vec3 from 'vec3'
 import ndarray from "ndarray"
+import pBlock from "prismarine-block"
 
 class World
 	constructor:(noa)->
 		_this=@
 		@noa=noa
 		@Chunk=pChunk "1.16.3"
+		@Block=pBlock "1.16.3"
+		@blocks={}
 		@chunkStorage={}
 		@chunkNeedsUpdate={}
 		@noa.world.on 'worldDataNeeded', (id, data, x, y, z)->
@@ -56,7 +59,10 @@ class World
 					for iy in [0..15]
 						for iz in [0..15]
 							bid=ch.sections[y].getBlock vec3 ix,iy,iz
-							if bid is 0
+							if @blocks[bid] is undefined
+								@blocks[bid]=@Block.fromStateId bid
+							b=@blocks[bid]
+							if b.name is "air" or b.name is "cave_air" or b.name is "void_air"
 								noaChunk.set ix,iy,iz,0
 							else
 								noaChunk.set ix,iy,iz,1
