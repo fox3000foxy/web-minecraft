@@ -71,7 +71,6 @@ World = class World {
 
   loadChunk(chunk, x, z) {
     var add, bid, ch, ci, cj, ck, ix, iy, iz, l, m, n, noaChunk, o, pos, ref, y;
-    console.log(x, z);
     x = -x - 1;
     ch = this.Chunk.fromJson(chunk);
     for (y = l = 0, ref = ch.sections.length - 1; (0 <= ref ? l <= ref : l >= ref); y = 0 <= ref ? ++l : --l) {

@@ -13,10 +13,12 @@ noa=new Engine
 	showFPS: true
 	chunkSize: 16
 	playerStart: [0.5, 100, 0.5]
-	chunkAddDistance: 7
-	chunkRemoveDistance: 7
+	chunkAddDistance: 6
+	chunkRemoveDistance: 6
 	useAO: true
 	manuallyControlChunkLoading: true
+
+console.log noa
 
 world=new World noa
 player=new Player noa
@@ -53,8 +55,8 @@ socket.on "connect",()->
 		return
 	return
 
-# scene = noa.rendering.getScene()
-# scene.fogMode=BABYLON.Scene.FOGMODE_LINEAR
-# scene.fogStart = 4*16
-# scene.fogEnd = 5*16
-# scene.fogColor = new BABYLON.Color3 204/255, 232/255, 255/255
+scene = noa.rendering.getScene()
+scene.fogMode=BABYLON.Scene.FOGMODE_LINEAR
+scene.fogStart = 4*16
+scene.fogEnd = 5*16
+scene.fogColor = new BABYLON.Color3 204/255, 232/255, 255/255

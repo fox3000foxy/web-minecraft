@@ -41,9 +41,25 @@ class Player
 				if _this.noa.camera.zoomDistance > 10
 					_this.noa.camera.zoomDistance=10
 			return
+		animate=(time)->
+			requestAnimationFrame animate
+			TWEEN.update time
+			return
+		requestAnimationFrame animate
 		return
 	updatePosition:(x,y,z)->
-		@noa.entities.setPosition @player,[-x,y,z]
+		_this=@
+		pos=@noa.entities.getPosition @player
+		data_from={x:pos[0],y:pos[1],z:pos[2]}
+		data_to={x:-x,y,z}
+		tw=new TWEEN.Tween(data_from)
+			.to data_to,100
+			.easing TWEEN.Easing.Quadratic.Out
+			.onUpdate ()->
+				# console.log [data_from.x,data_from.y,data_from.z]
+				_this.noa.entities.setPosition _this.player,[data_from.x,data_from.y,data_from.z]
+				return
+			.start()
 		return
 	resetForces:()->
 		@body.velocity[0]=0

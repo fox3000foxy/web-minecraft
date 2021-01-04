@@ -51,7 +51,6 @@
     });
     socket.on("move", function(state, toggle) {
       si[socket.id].bot.setControlState(state, toggle);
-      console.log(state, toggle);
     });
     socket.on("disconnect", function() {
       console.log(`[\x1b[31m-\x1b[0m] ${si[socket.id].nick}`);

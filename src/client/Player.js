@@ -11,7 +11,7 @@ import '@babylonjs/core/Meshes/Builders/boxBuilder';
 
 Player = class Player {
   constructor(noa) {
-    var _this, dat, h, mesh, w;
+    var _this, animate, dat, h, mesh, w;
     _this = this;
     this.noa = noa;
     this.player = this.noa.playerEntity;
@@ -53,11 +53,32 @@ Player = class Player {
         }
       }
     });
+    animate = function(time) {
+      requestAnimationFrame(animate);
+      TWEEN.update(time);
+    };
+    requestAnimationFrame(animate);
     return;
   }
 
   updatePosition(x, y, z) {
-    this.noa.entities.setPosition(this.player, [-x, y, z]);
+    var _this, data_from, data_to, pos, tw;
+    _this = this;
+    pos = this.noa.entities.getPosition(this.player);
+    data_from = {
+      x: pos[0],
+      y: pos[1],
+      z: pos[2]
+    };
+    data_to = {
+      x: -x,
+      y,
+      z
+    };
+    tw = new TWEEN.Tween(data_from).to(data_to, 100).easing(TWEEN.Easing.Quadratic.Out).onUpdate(function() {
+      // console.log [data_from.x,data_from.y,data_from.z]
+      _this.noa.entities.setPosition(_this.player, [data_from.x, data_from.y, data_from.z]);
+    }).start();
   }
 
   resetForces() {

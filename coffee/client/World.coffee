@@ -47,7 +47,6 @@ class World
 		grassID = @noa.registry.registerBlock 2, { material: 'grass' }
 		return
 	loadChunk:(chunk,x,z)->
-		console.log x,z
 		x=-x-1
 		ch=@Chunk.fromJson chunk
 		for y in [0..ch.sections.length-1]

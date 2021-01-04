@@ -33,7 +33,6 @@ io.sockets.on "connection", (socket)->
 		return
 	socket.on "move",(state,toggle)->
 		si[socket.id].bot.setControlState state,toggle
-		console.log state,toggle
 		return
 	socket.on "disconnect",()->
 		console.log "[\x1b[31m-\x1b[0m] #{si[socket.id].nick}"
