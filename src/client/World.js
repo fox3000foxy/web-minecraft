@@ -7,16 +7,12 @@ import vec3 from 'vec3';
 
 import ndarray from "ndarray";
 
-import pBlock from "prismarine-block";
-
 World = class World {
   constructor(noa) {
     var _this, brownish, dirtID, grassID, greenish, textureURL;
     _this = this;
     this.noa = noa;
     this.Chunk = pChunk("1.16.3");
-    this.Block = pBlock("1.16.3");
-    this.blocks = {};
     this.chunkStorage = {};
     this.chunkNeedsUpdate = {};
     this.noa.world.on('worldDataNeeded', function(id, data, x, y, z) {
@@ -74,7 +70,7 @@ World = class World {
   }
 
   loadChunk(chunk, x, z) {
-    var add, b, bid, ch, ci, cj, ck, ix, iy, iz, l, m, n, noaChunk, o, pos, ref, y;
+    var add, b, ch, ci, cj, ck, ix, iy, iz, l, m, n, noaChunk, o, pos, ref, y;
     x = -x - 1;
     ch = this.Chunk.fromJson(chunk);
     for (y = l = 0, ref = ch.sections.length - 1; (0 <= ref ? l <= ref : l >= ref); y = 0 <= ref ? ++l : --l) {
@@ -83,11 +79,7 @@ World = class World {
         for (ix = m = 0; m <= 15; ix = ++m) {
           for (iy = n = 0; n <= 15; iy = ++n) {
             for (iz = o = 0; o <= 15; iz = ++o) {
-              bid = ch.sections[y].getBlock(vec3(ix, iy, iz));
-              if (this.blocks[bid] === void 0) {
-                this.blocks[bid] = this.Block.fromStateId(bid);
-              }
-              b = this.blocks[bid];
+              b = ch.getBlock(vec3(ix, iy + y * 16, iz));
               if (b.name === "air" || b.name === "cave_air" || b.name === "void_air") {
                 noaChunk.set(ix, iy, iz, 0);
               } else {
