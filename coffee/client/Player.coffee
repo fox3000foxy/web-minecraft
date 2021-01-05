@@ -53,7 +53,7 @@ class Player
 		data_from={x:pos[0],y:pos[1],z:pos[2]}
 		data_to={x:-x,y,z}
 		tw=new TWEEN.Tween(data_from)
-			.to data_to,100
+			.to data_to,50
 			.easing TWEEN.Easing.Quadratic.Out
 			.onUpdate ()->
 				# console.log [data_from.x,data_from.y,data_from.z]

@@ -75,7 +75,7 @@ Player = class Player {
       y,
       z
     };
-    tw = new TWEEN.Tween(data_from).to(data_to, 100).easing(TWEEN.Easing.Quadratic.Out).onUpdate(function() {
+    tw = new TWEEN.Tween(data_from).to(data_to, 50).easing(TWEEN.Easing.Quadratic.Out).onUpdate(function() {
       // console.log [data_from.x,data_from.y,data_from.z]
       _this.noa.entities.setPosition(_this.player, [data_from.x, data_from.y, data_from.z]);
     }).start();
