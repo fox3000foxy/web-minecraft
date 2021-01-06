@@ -18,7 +18,7 @@ noa=new Engine
 	useAO: true
 	manuallyControlChunkLoading: true
 
-console.log noa
+console.log noa.camera
 
 animate=()->
 	requestAnimationFrame animate
@@ -44,10 +44,12 @@ kc=
 $(document).keydown (z)->
 	if kc[z.keyCode] isnt undefined
 		socket.emit "move",kc[z.keyCode],true
+		player.updateFov kc[z.keyCode],true
 	return
 $(document).keyup (z)->
 	if kc[z.keyCode] isnt undefined
 		socket.emit "move",kc[z.keyCode],false
+		player.updateFov kc[z.keyCode],false
 	return
 
 socket.on "connect",()->

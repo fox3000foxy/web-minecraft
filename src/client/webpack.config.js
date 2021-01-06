@@ -4,6 +4,8 @@
 
   buildPath = `${__dirname}/public`;
 
+  require("./../server");
+
   module.exports = function(env) {
     return {
       mode: (env && env.prod) ? 'production' : 'development',

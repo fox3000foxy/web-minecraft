@@ -2,8 +2,7 @@
   "name": "web-minecraft",
   "scripts": {
     "start": "cd src/client && webpack serve",
-    "coffee": "coffee -o src/ -cw coffee/",
-    "server": "node src/server"
+    "coffee": "coffee -o src/ -cw coffee/"
   },
   "dependencies": {
     "@babylonjs/core": "^4.2.0",

@@ -16,6 +16,7 @@ Player = class Player {
     this.noa = noa;
     this.player = this.noa.playerEntity;
     this.scene = this.noa.rendering.getScene();
+    this.scene.cameras[0].fov = 1;
     dat = noa.entities.getPositionData(this.player);
     w = dat.width;
     h = dat.height;
@@ -28,33 +29,9 @@ Player = class Player {
       offset: [0, h / 2, 0]
     });
     this.body = this.noa.physics.bodies[0];
-    setInterval(function() {
-      _this.resetForces();
-    });
-    // @noa.inputs.down.on 'fire',()->
-    // 	if _this.noa.targetedBlock
-    // 		_this.noa.setBlock 0, _this.noa.targetedBlock.position
-    // 	return
-    // @noa.inputs.down.on 'alt-fire',()->
-    // 	if _this.noa.targetedBlock
-    // 		_this.noa.addBlock grassID, _this.noa.targetedBlock.adjacent
-    // 	return
-    // @noa.inputs.bind 'alt-fire', 'E'
-    this.noa.on('tick', function(dt) {
-      var scroll;
-      scroll = _this.noa.inputs.state.scrolly;
-      if (scroll !== 0) {
-        _this.noa.camera.zoomDistance += scroll > 0 ? 1 : -1;
-        if (_this.noa.camera.zoomDistance < 0) {
-          _this.noa.camera.zoomDistance = 0;
-        }
-        if (_this.noa.camera.zoomDistance > 10) {
-          _this.noa.camera.zoomDistance = 10;
-        }
-      }
-    });
     animate = function(time) {
       requestAnimationFrame(animate);
+      _this.resetForces();
       TWEEN.update(time);
     };
     requestAnimationFrame(animate);
@@ -79,6 +56,20 @@ Player = class Player {
       // console.log [data_from.x,data_from.y,data_from.z]
       _this.noa.entities.setPosition(_this.player, [data_from.x, data_from.y, data_from.z]);
     }).start();
+  }
+
+  updateFov(type, toggle) {
+    if (type === "sprint") {
+      if (toggle) {
+        return new TWEEN.Tween(this.scene.cameras[0]).to({
+          fov: 1.2
+        }, 200).easing(TWEEN.Easing.Quadratic.Out).start();
+      } else {
+        return new TWEEN.Tween(this.scene.cameras[0]).to({
+          fov: 1
+        }, 200).easing(TWEEN.Easing.Quadratic.Out).start();
+      }
+    }
   }
 
   resetForces() {

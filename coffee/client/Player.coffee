@@ -9,6 +9,7 @@ class Player
 		@noa=noa
 		@player=@noa.playerEntity
 		@scene=@noa.rendering.getScene()
+		@scene.cameras[0].fov=1
 		dat = noa.entities.getPositionData @player
 		w = dat.width
 		h = dat.height
@@ -20,29 +21,9 @@ class Player
 			mesh: mesh
 			offset: [0, h / 2, 0]
 		@body=@noa.physics.bodies[0]
-		setInterval ()->
-			_this.resetForces()
-			return
-		# @noa.inputs.down.on 'fire',()->
-		# 	if _this.noa.targetedBlock
-		# 		_this.noa.setBlock 0, _this.noa.targetedBlock.position
-		# 	return
-		# @noa.inputs.down.on 'alt-fire',()->
-		# 	if _this.noa.targetedBlock
-		# 		_this.noa.addBlock grassID, _this.noa.targetedBlock.adjacent
-		# 	return
-		# @noa.inputs.bind 'alt-fire', 'E'
-		@noa.on 'tick',(dt)->
-			scroll=_this.noa.inputs.state.scrolly
-			if scroll isnt 0
-				_this.noa.camera.zoomDistance += if scroll>0 then 1 else -1
-				if _this.noa.camera.zoomDistance < 0
-					_this.noa.camera.zoomDistance=0
-				if _this.noa.camera.zoomDistance > 10
-					_this.noa.camera.zoomDistance=10
-			return
 		animate=(time)->
 			requestAnimationFrame animate
+			_this.resetForces()
 			TWEEN.update time
 			return
 		requestAnimationFrame animate
@@ -61,6 +42,19 @@ class Player
 				return
 			.start()
 		return
+	updateFov:(type,toggle)->
+		if type is "sprint"
+
+			if toggle
+				new TWEEN.Tween(@scene.cameras[0])
+					.to {fov:1.2},200
+					.easing TWEEN.Easing.Quadratic.Out
+					.start()
+			else
+				new TWEEN.Tween(@scene.cameras[0])
+					.to {fov:1},200
+					.easing TWEEN.Easing.Quadratic.Out
+					.start()
 	resetForces:()->
 		@body.velocity[0]=0
 		@body.velocity[1]=0

@@ -32,7 +32,7 @@ noa = new Engine({
   manuallyControlChunkLoading: true
 });
 
-console.log(noa);
+console.log(noa.camera);
 
 animate = function() {
   var dir, pitch, yaw;
@@ -62,12 +62,14 @@ kc = {
 $(document).keydown(function(z) {
   if (kc[z.keyCode] !== void 0) {
     socket.emit("move", kc[z.keyCode], true);
+    player.updateFov(kc[z.keyCode], true);
   }
 });
 
 $(document).keyup(function(z) {
   if (kc[z.keyCode] !== void 0) {
     socket.emit("move", kc[z.keyCode], false);
+    player.updateFov(kc[z.keyCode], false);
   }
 });
 

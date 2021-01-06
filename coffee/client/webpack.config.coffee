@@ -1,6 +1,6 @@
 
 buildPath="#{__dirname}/public"
-
+require "./../server"
 module.exports=(env)-> {
 	mode: if (env and env.prod) then 'production' else 'development'
 	entry: './index.js'
