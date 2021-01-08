@@ -9,64 +9,71 @@ import ndarray from "ndarray";
 
 World = class World {
   constructor(noa) {
-    var _this, brownish, dirtID, grassID, greenish, textureURL;
+    var _this, brownish, textureURL;
     _this = this;
     this.noa = noa;
     this.Chunk = pChunk("1.16.3");
     this.chunkStorage = {};
     this.chunkNeedsUpdate = {};
     this.noa.world.on('worldDataNeeded', function(id, data, x, y, z) {
-      var ix, iy, iz, l, m, n, noaChunk;
+      var noaChunk, noaNewChunk;
       noaChunk = _this.chunkStorage[id];
-      for (ix = l = 0; l <= 15; ix = ++l) {
-        for (iy = m = 0; m <= 15; iy = ++m) {
-          for (iz = n = 0; n <= 15; iz = ++n) {
-            data.set(ix, iy, iz, noaChunk.get(15 - ix, iy, iz));
-          }
-        }
-      }
-      _this.noa.world.setChunkData(id, data);
+      noaNewChunk = new ndarray(noaChunk.data, noaChunk.shape);
+      _this.noa.world.setChunkData(id, noaNewChunk);
     });
     this.noa.world.on("playerEnteredChunk", function(ci, cj, ck) {
-      var add, dist, i, j, k, l, m, n, ref, ref1, ref2, ref3, ref4, ref5;
-      add = _this.noa.world.chunkAddDistance;
-      for (i = l = ref = ci - add, ref1 = ci + add; (ref <= ref1 ? l <= ref1 : l >= ref1); i = ref <= ref1 ? ++l : --l) {
-        for (j = m = ref2 = cj - add, ref3 = cj + add; (ref2 <= ref3 ? m <= ref3 : m >= ref3); j = ref2 <= ref3 ? ++m : --m) {
-          for (k = n = ref4 = ck - add, ref5 = ck + add; (ref4 <= ref5 ? n <= ref5 : n >= ref5); k = ref4 <= ref5 ? ++n : --n) {
-            if (!_this.noa.world._chunksKnown.includes(i, j, k)) {
-              if (_this.chunkStorage[`${i}|${j}|${k}|default`] !== void 0) {
-                _this.noa.world.manuallyLoadChunk(i * 16, j * 16, k * 16);
-              }
+      _this.loadChunksAroundPlayer(ci, cj, ck);
+      _this.unloadChunksAroundPlayer(ci, cj, ck);
+    });
+    textureURL = null;
+    brownish = [0.45, 0.36, 0.22];
+    this.noa.registry.registerMaterial('dirt', brownish, textureURL);
+    this.noa.registry.registerMaterial('water', [0.5, 0.5, 0.8, 0.7], null);
+    this.noa.registry.registerBlock(1, {
+      material: 'dirt'
+    });
+    this.noa.registry.registerBlock(2, {
+      material: 'grass'
+    });
+    this.noa.registry.registerBlock(3, {
+      material: 'water',
+      fluid: true
+    });
+    return;
+  }
+
+  loadChunksAroundPlayer(ci, cj, ck) {
+    var add, i, j, k, l, m, n, ref, ref1, ref2, ref3, ref4, ref5;
+    add = this.noa.world.chunkAddDistance;
+    for (i = l = ref = ci - add, ref1 = ci + add; (ref <= ref1 ? l <= ref1 : l >= ref1); i = ref <= ref1 ? ++l : --l) {
+      for (j = m = ref2 = cj - add, ref3 = cj + add; (ref2 <= ref3 ? m <= ref3 : m >= ref3); j = ref2 <= ref3 ? ++m : --m) {
+        for (k = n = ref4 = ck - add, ref5 = ck + add; (ref4 <= ref5 ? n <= ref5 : n >= ref5); k = ref4 <= ref5 ? ++n : --n) {
+          if (!this.noa.world._chunksKnown.includes(i, j, k)) {
+            if (this.chunkStorage[`${i}|${j}|${k}|default`] !== void 0) {
+              this.noa.world.manuallyLoadChunk(i * 16, j * 16, k * 16);
             }
           }
         }
       }
-      dist = _this.noa.world.chunkRemoveDistance;
-      _this.noa.world._chunksKnown.forEach(function(loc) {
-        var di, dj, dk;
-        if (_this.noa.world._chunksToRemove.includes(loc[0], loc[1], loc[2])) {
-          return;
-        }
-        di = loc[0] - ci;
-        dj = loc[1] - cj;
-        dk = loc[2] - ck;
-        if (dist <= Math.abs(di) || dist <= Math.abs(dj) || dist <= Math.abs(dk)) {
-          _this.noa.world.manuallyUnloadChunk(loc[0] * 16, loc[1] * 16, loc[2] * 16);
-        }
-      });
+    }
+  }
+
+  unloadChunksAroundPlayer(ci, cj, ck) {
+    var _this, dist;
+    _this = this;
+    dist = this.noa.world.chunkRemoveDistance;
+    this.noa.world._chunksKnown.forEach(function(loc) {
+      var di, dj, dk;
+      if (_this.noa.world._chunksToRemove.includes(loc[0], loc[1], loc[2])) {
+        return;
+      }
+      di = loc[0] - ci;
+      dj = loc[1] - cj;
+      dk = loc[2] - ck;
+      if (dist <= Math.abs(di) || dist <= Math.abs(dj) || dist <= Math.abs(dk)) {
+        _this.noa.world.manuallyUnloadChunk(loc[0] * 16, loc[1] * 16, loc[2] * 16);
+      }
     });
-    textureURL = null;
-    brownish = [0.45, 0.36, 0.22];
-    greenish = [0.1, 0.8, 0.2];
-    this.noa.registry.registerMaterial('dirt', brownish, textureURL);
-    this.noa.registry.registerMaterial('grass', greenish, textureURL);
-    dirtID = this.noa.registry.registerBlock(1, {
-      material: 'dirt'
-    });
-    grassID = this.noa.registry.registerBlock(2, {
-      material: 'grass'
-    });
-    return;
   }
 
   loadChunk(chunk, x, z) {
@@ -81,9 +88,11 @@ World = class World {
             for (iz = o = 0; o <= 15; iz = ++o) {
               b = ch.getBlock(vec3(ix, iy + y * 16, iz));
               if (b.name === "air" || b.name === "cave_air" || b.name === "void_air") {
-                noaChunk.set(ix, iy, iz, 0);
+                noaChunk.set(15 - ix, iy, iz, 0);
+              } else if (b.name === "water") {
+                noaChunk.set(15 - ix, iy, iz, 3);
               } else {
-                noaChunk.set(ix, iy, iz, 1);
+                noaChunk.set(15 - ix, iy, iz, 1);
               }
             }
           }

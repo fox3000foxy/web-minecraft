@@ -25,7 +25,6 @@ noa = new Engine({
   debug: true,
   showFPS: true,
   chunkSize: 16,
-  playerStart: [0.5, 100, 0.5],
   chunkAddDistance: 6,
   chunkRemoveDistance: 6,
   useAO: true,
