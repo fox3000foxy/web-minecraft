@@ -23,10 +23,12 @@ class World
 		brownish = [0.45, 0.36, 0.22]
 		@noa.registry.registerMaterial 'dirt', brownish, textureURL
 		@noa.registry.registerMaterial 'water',[0.5, 0.5, 0.8, 0.7], null
+		@noa.registry.registerMaterial 'lava',[158/255, 83/255, 13/255,0.99], null
 
 		@noa.registry.registerBlock 1, { material: 'dirt' }
 		@noa.registry.registerBlock 2, { material: 'grass' }
 		@noa.registry.registerBlock 3, { material: 'water' ,fluid:true}
+		@noa.registry.registerBlock 4, { material: 'lava' ,fluid:true}
 		return
 	loadChunksAroundPlayer:(ci,cj,ck)->
 		add = @noa.world.chunkAddDistance
@@ -64,6 +66,8 @@ class World
 								noaChunk.set 15-ix,iy,iz,0
 							else if b.name is "water"
 								noaChunk.set 15-ix,iy,iz,3
+							else if b.name is "lava"
+								noaChunk.set 15-ix,iy,iz,4
 							else
 								noaChunk.set 15-ix,iy,iz,1
 			@chunkStorage["#{x}|#{y}|#{z}|default"]=noaChunk

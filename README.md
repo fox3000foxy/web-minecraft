@@ -5,7 +5,7 @@
 
 <i>Web-minecraft noa-engine transform!</i>
 
-[<img src="https://i.ibb.co/wRbdfzR/Screen.png" alt="Screenshot" width="100%">](https://i.ibb.co/wRbdfzR/Screen.png)
+[<img src="https://i.ibb.co/fSrVNJs/Screenshot-from-2021-01-08-15-04-02.png" alt="Screenshot" width="100%">](https://i.ibb.co/fSrVNJs/Screenshot-from-2021-01-08-15-04-02.png)
 <h1>Installation and running:</h1>
 
 ```bash

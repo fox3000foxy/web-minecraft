@@ -29,6 +29,7 @@ World = class World {
     brownish = [0.45, 0.36, 0.22];
     this.noa.registry.registerMaterial('dirt', brownish, textureURL);
     this.noa.registry.registerMaterial('water', [0.5, 0.5, 0.8, 0.7], null);
+    this.noa.registry.registerMaterial('lava', [158 / 255, 83 / 255, 13 / 255, 0.99], null);
     this.noa.registry.registerBlock(1, {
       material: 'dirt'
     });
@@ -37,6 +38,10 @@ World = class World {
     });
     this.noa.registry.registerBlock(3, {
       material: 'water',
+      fluid: true
+    });
+    this.noa.registry.registerBlock(4, {
+      material: 'lava',
       fluid: true
     });
     return;
@@ -91,6 +96,8 @@ World = class World {
                 noaChunk.set(15 - ix, iy, iz, 0);
               } else if (b.name === "water") {
                 noaChunk.set(15 - ix, iy, iz, 3);
+              } else if (b.name === "lava") {
+                noaChunk.set(15 - ix, iy, iz, 4);
               } else {
                 noaChunk.set(15 - ix, iy, iz, 1);
               }
