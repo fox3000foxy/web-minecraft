@@ -19,9 +19,8 @@ class World
 			_this.loadChunksAroundPlayer ci,cj,ck
 			_this.unloadChunksAroundPlayer ci,cj,ck
 			return
-		textureURL = null
 		brownish = [0.45, 0.36, 0.22]
-		@noa.registry.registerMaterial 'dirt', brownish, textureURL
+		@noa.registry.registerMaterial 'dirt', brownish, "dirt.png"
 		@noa.registry.registerMaterial 'water',[0.5, 0.5, 0.8, 0.7], null
 		@noa.registry.registerMaterial 'lava',[158/255, 83/255, 13/255,0.99], null
 

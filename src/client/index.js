@@ -25,10 +25,11 @@ noa = new Engine({
   debug: true,
   showFPS: true,
   chunkSize: 16,
-  chunkAddDistance: 6,
-  chunkRemoveDistance: 6,
+  chunkAddDistance: 4,
+  chunkRemoveDistance: 4,
   useAO: true,
-  manuallyControlChunkLoading: true
+  manuallyControlChunkLoading: true,
+  texturePath: 'textures/'
 });
 
 console.log(noa.camera);
@@ -90,8 +91,8 @@ scene = noa.rendering.getScene();
 
 scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
 
-scene.fogStart = 4 * 16;
+scene.fogStart = 2 * 16;
 
-scene.fogEnd = 5 * 16;
+scene.fogEnd = 3 * 16;
 
 scene.fogColor = new BABYLON.Color3(204 / 255, 232 / 255, 255 / 255);

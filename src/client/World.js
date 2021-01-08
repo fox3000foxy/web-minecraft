@@ -9,7 +9,7 @@ import ndarray from "ndarray";
 
 World = class World {
   constructor(noa) {
-    var _this, brownish, textureURL;
+    var _this, brownish;
     _this = this;
     this.noa = noa;
     this.Chunk = pChunk("1.16.3");
@@ -25,9 +25,8 @@ World = class World {
       _this.loadChunksAroundPlayer(ci, cj, ck);
       _this.unloadChunksAroundPlayer(ci, cj, ck);
     });
-    textureURL = null;
     brownish = [0.45, 0.36, 0.22];
-    this.noa.registry.registerMaterial('dirt', brownish, textureURL);
+    this.noa.registry.registerMaterial('dirt', brownish, "dirt.png");
     this.noa.registry.registerMaterial('water', [0.5, 0.5, 0.8, 0.7], null);
     this.noa.registry.registerMaterial('lava', [158 / 255, 83 / 255, 13 / 255, 0.99], null);
     this.noa.registry.registerBlock(1, {
