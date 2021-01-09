@@ -21,18 +21,19 @@ class Player
 			mesh: mesh
 			offset: [0, h / 2, 0]
 		@body=@noa.physics.bodies[0]
-		animate=(time)->
-			requestAnimationFrame animate
-			_this.resetForces()
-			TWEEN.update time
-			return
-		requestAnimationFrame animate
+		console.log @body
+		return
+	tick:()->
+		@resetForces()
+		TWEEN.update()
+		@resetForces()
 		return
 	updatePosition:(x,y,z)->
 		_this=@
 		pos=@noa.entities.getPosition @player
 		data_from={x:pos[0],y:pos[1],z:pos[2]}
 		data_to={x:-x,y,z}
+		# @noa.entities.setPosition @player,[data_to.x,data_to.y,data_to.z]
 		tw=new TWEEN.Tween(data_from)
 			.to data_to,50
 			.easing TWEEN.Easing.Quadratic.Out
@@ -44,7 +45,6 @@ class Player
 		return
 	updateFov:(type,toggle)->
 		if type is "sprint"
-
 			if toggle
 				new TWEEN.Tween(@scene.cameras[0])
 					.to {fov:1.2},200
@@ -56,6 +56,10 @@ class Player
 					.easing TWEEN.Easing.Quadratic.Out
 					.start()
 	resetForces:()->
+		@body.airDrag=0
+		@body.fluidDrag=0
+		@body.mass=0
+		@body.friction=0
 		@body.velocity[0]=0
 		@body.velocity[1]=0
 		@body.velocity[2]=0

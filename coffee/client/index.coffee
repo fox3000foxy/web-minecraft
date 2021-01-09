@@ -12,26 +12,24 @@ noa=new Engine
 	debug: true
 	showFPS: true
 	chunkSize: 16
-	chunkAddDistance: 4
-	chunkRemoveDistance: 4
+	chunkAddDistance: 5
+	chunkRemoveDistance: 5
 	useAO: true
 	manuallyControlChunkLoading: true
 	texturePath: 'textures/'
+	tickRate:60
 
-console.log noa.camera
-
-animate=()->
-	requestAnimationFrame animate
-	dir=noa.camera.getDirection()
-	pitch=noa.camera.pitch
-	yaw=noa.camera.heading
-	socket.emit "look",-yaw+Math.PI,-pitch
-	return
-animate()
+console.log noa
 
 world=new World noa
 player=new Player noa
 
+noa.rendering.tick=()->
+	# console.log "tick"
+	pitch=noa.camera.pitch
+	yaw=noa.camera.heading
+	socket.emit "look",-yaw+Math.PI,-pitch
+	player.tick()
 kc=
 	87:"forward"
 	65:"right"
@@ -68,6 +66,6 @@ socket.on "connect",()->
 
 scene = noa.rendering.getScene()
 scene.fogMode=BABYLON.Scene.FOGMODE_LINEAR
-scene.fogStart = 2*16
-scene.fogEnd = 3*16
+scene.fogStart = (noa.world.chunkAddDistance-2)*16
+scene.fogEnd = (noa.world.chunkAddDistance-1)*16
 scene.fogColor = new BABYLON.Color3 204/255, 232/255, 255/255

@@ -11,7 +11,7 @@ import '@babylonjs/core/Meshes/Builders/boxBuilder';
 
 Player = class Player {
   constructor(noa) {
-    var _this, animate, dat, h, mesh, w;
+    var _this, dat, h, mesh, w;
     _this = this;
     this.noa = noa;
     this.player = this.noa.playerEntity;
@@ -29,13 +29,14 @@ Player = class Player {
       offset: [0, h / 2, 0]
     });
     this.body = this.noa.physics.bodies[0];
-    animate = function(time) {
-      requestAnimationFrame(animate);
-      _this.resetForces();
-      TWEEN.update(time);
-    };
-    requestAnimationFrame(animate);
+    console.log(this.body);
     return;
+  }
+
+  tick() {
+    this.resetForces();
+    TWEEN.update();
+    this.resetForces();
   }
 
   updatePosition(x, y, z) {
@@ -52,6 +53,7 @@ Player = class Player {
       y,
       z
     };
+    // @noa.entities.setPosition @player,[data_to.x,data_to.y,data_to.z]
     tw = new TWEEN.Tween(data_from).to(data_to, 50).easing(TWEEN.Easing.Quadratic.Out).onUpdate(function() {
       // console.log [data_from.x,data_from.y,data_from.z]
       _this.noa.entities.setPosition(_this.player, [data_from.x, data_from.y, data_from.z]);
@@ -73,6 +75,10 @@ Player = class Player {
   }
 
   resetForces() {
+    this.body.airDrag = 0;
+    this.body.fluidDrag = 0;
+    this.body.mass = 0;
+    this.body.friction = 0;
     this.body.velocity[0] = 0;
     this.body.velocity[1] = 0;
     this.body.velocity[2] = 0;

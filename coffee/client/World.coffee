@@ -3,6 +3,7 @@ import pChunk from 'prismarine-chunk'
 import vec3 from 'vec3'
 import ndarray from "ndarray"
 
+
 class World
 	constructor:(noa)->
 		_this=@
