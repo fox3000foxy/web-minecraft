@@ -1,12 +1,16 @@
 
 import Engine from 'noa-engine'
-import {io} from 'socket.io-client'
-import {World} from "./World"
-import {Player} from "./Player"
-import * as BABYLON from '@babylonjs/core/Legacy/legacy'
+import { Scene } from "@babylonjs/core/scene"
+import { Color3 } from '@babylonjs/core'
 import $ from "jquery"
 
-socket=io ":8081"
+import {io} from 'socket.io-client'
+import {World} from "./World.coffee"
+import {Player} from "./Player.coffee"
+
+console.log document
+
+socket=io()
 
 noa=new Engine
 	debug: true
@@ -65,7 +69,7 @@ socket.on "connect",()->
 	return
 
 scene = noa.rendering.getScene()
-scene.fogMode=BABYLON.Scene.FOGMODE_LINEAR
+scene.fogMode=Scene.FOGMODE_LINEAR
 scene.fogStart = (noa.world.chunkAddDistance-2)*16
 scene.fogEnd = (noa.world.chunkAddDistance-1)*16
-scene.fogColor = new BABYLON.Color3 204/255, 232/255, 255/255
+scene.fogColor = new Color3 204/255, 232/255, 255/255
