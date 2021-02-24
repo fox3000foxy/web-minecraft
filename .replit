@@ -1,0 +1,2 @@
+language = "nodejs"
+run = "rm -rf node_modules;npm i;npm run build;npm start"
