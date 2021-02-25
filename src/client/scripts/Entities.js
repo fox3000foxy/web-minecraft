@@ -1,8 +1,9 @@
 import * as THREE from "three";
-
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 var Entities = class Entities {
     constructor(game) {
         this.game = game;
+        //mob
         this.mobMaterial = new THREE.MeshStandardMaterial({
             color: new THREE.Color("red"),
         });
@@ -15,9 +16,20 @@ var Entities = class Entities {
         );
         this.mobMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
         this.game.scene.add(this.mobMesh);
+
+        //player
         this.playerMaterial = new THREE.MeshStandardMaterial({
             color: new THREE.Color("blue"),
         });
+//         let parentC = this
+//         var loader = new FBXLoader();
+//           loader.load(
+//     				'./assets/models/players.fbx',
+//     				 function( object ) {
+//     					 parentC.game.scene.add( object );
+//     				 }
+//     			)
+//         
         this.playerGeometry = new THREE.BoxGeometry(1, 1, 1);
         this.playerMaxCount = 200;
         this.playerMesh = new THREE.InstancedMesh(

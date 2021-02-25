@@ -12,11 +12,13 @@ var PlayerInInventory = class PlayerInInventory {
         this.scene.background = new THREE.Color("black");
         light = new THREE.AmbientLight(0xffffff);
         this.scene.add(light);
+        
         player = this.game.al.get("player");
         playerTex = this.game.al.get("playerTex");
         playerTex.magFilter = THREE.NearestFilter;
         player.children[0].material.map = playerTex;
         this.scene.add(player);
+        
         this.camera = new THREE.PerspectiveCamera(70, 140 / 204, 0.1, 1000);
         this.camera.rotation.order = "YXZ";
         this.camera.position.z = 210;
