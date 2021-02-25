@@ -101,5 +101,13 @@ module.exports = {
                 },
             ],
         }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: `${__dirname}/html/register.html`,
+                    to: "./register.html",
+                },
+            ],
+        }),
     ],
 };

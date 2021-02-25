@@ -44,7 +44,7 @@
   server[i].innerHTML = `
   <br>
   <div>
-  <table style="padding:0 0 0 25%" onclick="location.href='./game.html#${"drmike"}§${server[i].getAttribute('ip')}§${server[i].getAttribute('port')}'"><tr><td>
+  <table style="padding:0 0 0 25%" onclick="location.href='./game.html#${localStorage.getItem('username')}§${server[i].getAttribute('ip')}§${server[i].getAttribute('port')}'"><tr><td>
   <img src="./assets/images/server-icon.jpg" width=64 height=64>
   </td><td></td><td></td><td>
   <b>${server[i].getAttribute('label')}</b><br>

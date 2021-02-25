@@ -9,9 +9,12 @@
 
 body {
     background-image:url('../images/menu.gif');
-    background-size:100% 100%
+    background-size:100% 100%;
 }
 
+h1, h3 {
+    font-family: Minecraft;
+} 
 .button,.btn {
   height: 40px;
   width: 400px;
