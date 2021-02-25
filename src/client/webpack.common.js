@@ -20,8 +20,7 @@ module.exports = {
         maxAssetSize: 1.5e6,
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 loader: "worker-loader",
                 test: /\.worker\.js$/,
                 options: {
@@ -30,8 +29,7 @@ module.exports = {
             },
             {
                 test: /\.(scss)$/,
-                use: [
-                    {
+                use: [{
                         loader: "style-loader",
                     },
                     {
@@ -40,7 +38,7 @@ module.exports = {
                     {
                         loader: "postcss-loader",
                         options: {
-                            plugins: function () {
+                            plugins: function() {
                                 return [require("autoprefixer")];
                             },
                         },
@@ -56,11 +54,9 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
-                use: [
-                    {
-                        loader: "file-loader",
-                    },
-                ],
+                use: [{
+                    loader: "file-loader",
+                }, ],
             },
         ],
     },
@@ -78,36 +74,34 @@ module.exports = {
         new LodashModuleReplacementPlugin(),
         new WebpackBar(),
         new CopyPlugin({
-            patterns: [
-                {
-                    from: `${__dirname}/assets`,
-                    to: "assets",
-                },
-            ],
+            patterns: [{
+                from: `${__dirname}/assets`,
+                to: "assets",
+            }, ],
         }),
         new CopyPlugin({
-            patterns: [
-                {
-                    from: `${__dirname}/html/multiplayer.html`,
-                    to: "./multiplayer.html",
-                },
-            ],
+            patterns: [{
+                from: `${__dirname}/html/multiplayer.html`,
+                to: "./multiplayer.html",
+            }, ],
         }),
         new CopyPlugin({
-            patterns: [
-                {
-                    from: `${__dirname}/html/index.html`,
-                    to: "./index.html",
-                },
-            ],
+            patterns: [{
+                from: `${__dirname}/html/index.html`,
+                to: "./index.html",
+            }, ],
         }),
         new CopyPlugin({
-            patterns: [
-                {
-                    from: `${__dirname}/html/register.html`,
-                    to: "./register.html",
-                },
-            ],
+            patterns: [{
+                from: `${__dirname}/html/register.html`,
+                to: "./register.html",
+            }, ],
+        }),
+        new CopyPlugin({
+            patterns: [{
+                from: `${__dirname}/html/options.html`,
+                to: "./options.html",
+            }, ],
         }),
     ],
 };
