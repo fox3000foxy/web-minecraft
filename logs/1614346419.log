@@ -1,0 +1,16 @@
+[INFO]: Started logging...
+February 26th 2021, 14:33:41 seed: 1978001627
+February 26th 2021, 14:34:11 [[32mINFO[39m]: Fox3000 (::ffff:127.0.0.1) connected
+February 26th 2021, 14:34:11 [[32mINFO[39m]: position written, player spawning...
+February 26th 2021, 14:34:14 [[32mINFO[39m]: Fox3000 disconnected
+February 26th 2021, 14:34:14 [[31mERR[39m]: Client ::ffff:127.0.0.1:46652 : Error: This socket has been ended by the other party
+    at Socket.writeAfterFIN [as write] (net.js:456:14)
+    at Framer.ondata (/home/lsannier/Desktop/webmc-fork/node_modules/minecraft-protocol/node_modules/readable-stream/lib/_stream_readable.js:681:20)
+    at Framer.emit (events.js:315:20)
+    at addChunk (/home/lsannier/Desktop/webmc-fork/node_modules/minecraft-protocol/node_modules/readable-stream/lib/_stream_readable.js:298:12)
+    at readableAddChunk (/home/lsannier/Desktop/webmc-fork/node_modules/minecraft-protocol/node_modules/readable-stream/lib/_stream_readable.js:280:11)
+    at Framer.Readable.push (/home/lsannier/Desktop/webmc-fork/node_modules/minecraft-protocol/node_modules/readable-stream/lib/_stream_readable.js:241:10)
+    at Framer.Transform.push (/home/lsannier/Desktop/webmc-fork/node_modules/minecraft-protocol/node_modules/readable-stream/lib/_stream_transform.js:139:32)
+    at Framer._transform (/home/lsannier/Desktop/webmc-fork/node_modules/minecraft-protocol/src/transforms/framing.js:20:10)
+    at Framer.Transform._read (/home/lsannier/Desktop/webmc-fork/node_modules/minecraft-protocol/node_modules/readable-stream/lib/_stream_transform.js:177:10)
+    at Framer.Transform._write (/home/lsannier/Desktop/webmc-fork/node_modules/minecraft-protocol/node_modules/readable-stream/lib/_stream_transform.js:164:83)
