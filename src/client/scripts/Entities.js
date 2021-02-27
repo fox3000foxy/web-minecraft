@@ -1,9 +1,8 @@
 import * as THREE from "three";
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
+
 var Entities = class Entities {
     constructor(game) {
         this.game = game;
-        //mob
         this.mobMaterial = new THREE.MeshStandardMaterial({
             color: new THREE.Color("red"),
         });
@@ -16,20 +15,9 @@ var Entities = class Entities {
         );
         this.mobMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
         this.game.scene.add(this.mobMesh);
-
-        //player
         this.playerMaterial = new THREE.MeshStandardMaterial({
             color: new THREE.Color("blue"),
         });
-//         let parentC = this
-//         var loader = new FBXLoader();
-//           loader.load(
-//     				'./assets/models/players.fbx',
-//     				 function( object ) {
-//     					 parentC.game.scene.add( object );
-//     				 }
-//     			)
-//         
         this.playerGeometry = new THREE.BoxGeometry(1, 1, 1);
         this.playerMaxCount = 200;
         this.playerMesh = new THREE.InstancedMesh(
@@ -67,7 +55,7 @@ var Entities = class Entities {
         this.playerMesh.count = num_players;
         num_players = 0;
         for (let i in entities.players) {
-            if (entities.players[i][0] !== this.game.nick.split("%C2%A7")[0]) {
+            if (entities.players[i][0] !== this.game.nick) {
                 this.dummy.position.set(
                     entities.players[i][1] + offset[0],
                     entities.players[i][2] + offset[1],

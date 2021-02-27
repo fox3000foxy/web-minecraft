@@ -1,6 +1,6 @@
 var opn = require("open");
 var fs = require("fs");
-var config = JSON.parse(fs.readFileSync(`${__dirname}/server.json`));
+var config = JSON.parse(fs.readFileSync(`${__dirname}/properties.json`));
 var express = require("express");
 var app = express();
 var server = require("http").createServer(app);
@@ -19,69 +19,6 @@ app.use(
         contentSecurityPolicy: false,
     })
 );
-
-//SOCKET FOR INV
-//     app.get('/inventory', (req, res) => {
-//         var buffer = bot.inventory
-//         fs.writeFileSync(db + './buffers/inventory.json', JSON.stringify(buffer))
-//         res.status(200).sendFile(pathServer + `buffers/inventory.json`)
-//     })
-// app.get("/selectItem/:item", (req, res) => {
-//         bot.equip(parseInt(req.params.item), "hand")
-//         selectedItemType = req.params.item
-//     })
-//     app.get("/unsneak", (req, res) => {
-//         bot.setControlState("sneak",false)
-//     })
-//     app.get("/sneak", (req, res) => {
-//         bot.setControlState("sneak",true)
-//     })
-//     app.get("/equipItem/:item/:slot", (req, res) => {
-//         if (req.params.item == "0") return
-//         let slot;
-//         switch (req.params.slot) {
-//             case '5': slot = "head"; break;
-//             case '6': slot = "torso"; break;
-//             case '7': slot = "legs"; break;
-//             case '8': slot = "feet"; break;
-//         }
-//         try { bot.equip(parseInt(req.params.item), slot) }
-//         catch (e) { console.log(e) }
-//     })
-//     app.get("/unequipItem/:slot", (req, res) => {
-//         let slot;
-//         switch (req.params.slot) {
-//             case '5': slot = "head"; break;
-//             case '6': slot = "torso"; break;
-//             case '7': slot = "legs"; break;
-//             case '8': slot = "feet"; break;
-//         }
-//         //             console.log(req.params.slot)
-//         //             console.log(slot)
-//         try { bot.unequip(slot) }
-//         catch (e) { console.log(e) }
-//     })
-//     app.get("/dropItem/:item", (req, res) => {
-//         bot.toss(parseInt(req.params.item), 0, 1)
-//     })
-// 
-//     app.get("/selectedItem", (req, res) => {
-//         res.status(200).json(bot.quickBarSlot)
-//     })
-//     app.get("/invertItem/:item", (req, res) => {
-//         //             bot.equip(parseInt(req.params.item),"hand")
-//         //                 console.log(parseInt(req.params.item))
-//         bot.equip(parseInt(selectedItemType), "off-hand")
-//         selectedItemType = req.params.item
-//     })
-//     app.get("/scrollItem/:dir/:item", (req, res) => {
-//         if (req.params.dir == "down")
-//             bot.quickBarSlot += 1
-//         else
-//             bot.quickBarSlot -= 1
-// 
-//         bot.equip(parseInt(req.params.item), "hand")
-//     })
 
 app.use(compression());
 var mode = process.argv[2];
@@ -104,7 +41,6 @@ var botByNick = {};
 io.sockets.on("connection", function (socket) {
     var query = socket.handshake.query;
     var settings = query.nick.split('%C2%A7')
-    console.log(settings)
     console.log(`[\x1b[32m+\x1b[0m] ${settings[0]}`);
     var heldItem = null;
     var bot = mineflayer.createBot({
@@ -120,7 +56,15 @@ io.sockets.on("connection", function (socket) {
         socket.emit("mapChunk", cell.sections, packet.x, packet.z);
     });
     bot._client.on("respawn", function (packet) {
-        socket.emit("dimension", packet.dimension.value.effects.value);
+        socket.emit(
+            "dimension",
+            packet.dimension,
+            bot.supportFeature("dimensionIsAWorld")
+                ? "world"
+                : bot.supportFeature("dimensionIsAString")
+                ? "string"
+                : "int"
+        );
     });
     bot.on("heldItemChanged", function (item) {
         heldItem = item;
