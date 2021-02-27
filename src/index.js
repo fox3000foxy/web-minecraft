@@ -19,6 +19,70 @@ app.use(
         contentSecurityPolicy: false,
     })
 );
+
+//SOCKET FOR INV
+//     app.get('/inventory', (req, res) => {
+//         var buffer = bot.inventory
+//         fs.writeFileSync(db + './buffers/inventory.json', JSON.stringify(buffer))
+//         res.status(200).sendFile(pathServer + `buffers/inventory.json`)
+//     })
+// app.get("/selectItem/:item", (req, res) => {
+//         bot.equip(parseInt(req.params.item), "hand")
+//         selectedItemType = req.params.item
+//     })
+//     app.get("/unsneak", (req, res) => {
+//         bot.setControlState("sneak",false)
+//     })
+//     app.get("/sneak", (req, res) => {
+//         bot.setControlState("sneak",true)
+//     })
+//     app.get("/equipItem/:item/:slot", (req, res) => {
+//         if (req.params.item == "0") return
+//         let slot;
+//         switch (req.params.slot) {
+//             case '5': slot = "head"; break;
+//             case '6': slot = "torso"; break;
+//             case '7': slot = "legs"; break;
+//             case '8': slot = "feet"; break;
+//         }
+//         try { bot.equip(parseInt(req.params.item), slot) }
+//         catch (e) { console.log(e) }
+//     })
+//     app.get("/unequipItem/:slot", (req, res) => {
+//         let slot;
+//         switch (req.params.slot) {
+//             case '5': slot = "head"; break;
+//             case '6': slot = "torso"; break;
+//             case '7': slot = "legs"; break;
+//             case '8': slot = "feet"; break;
+//         }
+//         //             console.log(req.params.slot)
+//         //             console.log(slot)
+//         try { bot.unequip(slot) }
+//         catch (e) { console.log(e) }
+//     })
+//     app.get("/dropItem/:item", (req, res) => {
+//         bot.toss(parseInt(req.params.item), 0, 1)
+//     })
+// 
+//     app.get("/selectedItem", (req, res) => {
+//         res.status(200).json(bot.quickBarSlot)
+//     })
+//     app.get("/invertItem/:item", (req, res) => {
+//         //             bot.equip(parseInt(req.params.item),"hand")
+//         //                 console.log(parseInt(req.params.item))
+//         bot.equip(parseInt(selectedItemType), "off-hand")
+//         selectedItemType = req.params.item
+//     })
+//     app.get("/scrollItem/:dir/:item", (req, res) => {
+//         if (req.params.dir == "down")
+//             bot.quickBarSlot += 1
+//         else
+//             bot.quickBarSlot -= 1
+// 
+//         bot.equip(parseInt(req.params.item), "hand")
+//     })
+
 app.use(compression());
 var mode = process.argv[2];
 if (mode === "production") {

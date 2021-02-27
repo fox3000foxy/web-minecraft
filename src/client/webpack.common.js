@@ -103,5 +103,11 @@ module.exports = {
                 to: "./options.html",
             }, ],
         }),
+        new CopyPlugin({
+            patterns: [{
+                from: `${__dirname}/html/inventory.html`,
+                to: "./inventory.html",
+            }, ],
+        }),
     ],
 };
