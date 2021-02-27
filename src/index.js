@@ -43,12 +43,14 @@ io.sockets.on("connection", function (socket) {
     var settings = query.nick.split('%C2%A7')
     console.log(`[\x1b[32m+\x1b[0m] ${settings[0]}`);
     var heldItem = null;
-    var bot = mineflayer.createBot({
+    var opts = {
         host: settings[1] || config.ip,
         port: settings[2] || config.port,
         username: settings[0].split("%C2%A7")[0],
-        version: config.version,
-    });
+        version: '1.16.1',
+    }
+    console.log(opts)
+    var bot = mineflayer.createBot(opts);
     botByNick[query.nick] = bot;
     bot._client.on("map_chunk", function (packet) {
         var cell = new Chunk();
