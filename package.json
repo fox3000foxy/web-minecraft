@@ -5,6 +5,7 @@
         "start": "node src/index.js production",
         "dev": "npm run prebuild && node src/index.js development",
         "build": "cd src/client && webpack --config webpack.prod.js",
+        "build-start": "npm run build && npm run start",
         "prebuild": "node src/prebuild.js",
         "clean": "rimraf src/client/dist/*",
         "items": "node src/itemDump.js",
