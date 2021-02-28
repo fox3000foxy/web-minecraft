@@ -1,12 +1,11 @@
+var version = "1.16.1";
 var opn = require("open");
-var fs = require("fs");
-var config = JSON.parse(fs.readFileSync(`${__dirname}/properties.json`));
 var express = require("express");
 var app = express();
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 var mineflayer = require("mineflayer");
-var Chunk = require("prismarine-chunk")(config.version);
+var Chunk = require("prismarine-chunk")(version);
 var vec3 = require("vec3");
 var Convert = require("ansi-to-html");
 var convert = new Convert();
@@ -19,7 +18,6 @@ app.use(
         contentSecurityPolicy: false,
     })
 );
-
 app.use(compression());
 var mode = process.argv[2];
 if (mode === "production") {
@@ -40,17 +38,14 @@ server.listen(port, function () {
 var botByNick = {};
 io.sockets.on("connection", function (socket) {
     var query = socket.handshake.query;
-    var settings = query.nick.split('%C2%A7')
-    console.log(`[\x1b[32m+\x1b[0m] ${settings[0]}`);
+    console.log(`[\x1b[32m+\x1b[0m] ${query.nick}`);
     var heldItem = null;
-    var opts = {
-        host: settings[1] || config.ip,
-        port: settings[2] || config.port,
-        username: settings[0].split("%C2%A7")[0],
-        version: '1.16.1',
-    }
-    console.log(opts)
-    var bot = mineflayer.createBot(opts);
+    var bot = mineflayer.createBot({
+        host: query.server,
+        port: query.port,
+        username: query.nick,
+        version: version,
+    });
     botByNick[query.nick] = bot;
     bot._client.on("map_chunk", function (packet) {
         var cell = new Chunk();
@@ -58,15 +53,7 @@ io.sockets.on("connection", function (socket) {
         socket.emit("mapChunk", cell.sections, packet.x, packet.z);
     });
     bot._client.on("respawn", function (packet) {
-        socket.emit(
-            "dimension",
-            packet.dimension,
-            bot.supportFeature("dimensionIsAWorld")
-                ? "world"
-                : bot.supportFeature("dimensionIsAString")
-                ? "string"
-                : "int"
-        );
+        socket.emit("dimension", packet.dimension.value.effects.value);
     });
     bot.on("heldItemChanged", function (item) {
         heldItem = item;
