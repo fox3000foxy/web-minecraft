@@ -1,4 +1,4 @@
-var RandomNick = function () {
+var UrlParams = function (game) {
     var nameList = [
         "Time",
         "Past",
@@ -176,7 +176,26 @@ var RandomNick = function () {
     var finalName = "";
     finalName = nameList[Math.floor(Math.random() * nameList.length)];
     finalName += nameList[Math.floor(Math.random() * nameList.length)];
-    return finalName;
+
+    game.nick = new URL(document.location).searchParams.get("nick");
+    game.server = new URL(document.location).searchParams.get("server");
+    game.serverPort = new URL(document.location).searchParams.get("port");
+    var reload = false;
+    if (game.nick === "" || game.nick === null) {
+        reload = true;
+        game.nick = finalName;
+    }
+    if (game.server === "" || game.server === null) {
+        reload = true;
+        game.server = "localhost";
+    }
+    if (game.serverPort === "" || game.serverPort === null) {
+        reload = true;
+        game.serverPort = "25565";
+    }
+    if (reload) {
+        document.location.href = `?server=${game.server}&port=${game.serverPort}&nick=${game.nick}`;
+    }
 };
 
-export { RandomNick };
+export { UrlParams };

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-var TextureAtlasCreator = class TextureAtlasCreator {
+class TextureAtlasCreator {
     constructor(options) {
         this.textureX = options.textureX;
         this.textureMapping = options.textureMapping;
@@ -110,11 +110,10 @@ var TextureAtlasCreator = class TextureAtlasCreator {
         row = (tick - 1) % h;
         return { row, col };
     }
-};
+}
 
-var AnimatedTextureAtlas = class AnimatedTextureAtlas {
+class AnimatedTextureAtlas {
     constructor(game) {
-        var _this = this;
         this.game = game;
         this.material = new THREE.MeshStandardMaterial({
             side: 0,
@@ -135,14 +134,13 @@ var AnimatedTextureAtlas = class AnimatedTextureAtlas {
             savedTextures.push(tekstura);
         }
         var tickq = 0;
-        setInterval(function () {
-            var tekst;
+        setInterval(() => {
             tickq++;
-            tekst = savedTextures[tickq % 9];
-            _this.material.map = tekst;
-            _this.material.map.needsUpdate = true;
+            var tekst = savedTextures[tickq % 9];
+            this.material.map = tekst;
+            this.material.map.needsUpdate = true;
         }, 100);
     }
-};
+}
 
 export { AnimatedTextureAtlas, TextureAtlasCreator };

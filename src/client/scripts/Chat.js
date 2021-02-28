@@ -1,14 +1,13 @@
-var Chat = class Chat {
+class Chat {
     constructor(game) {
-        var _this = this;
         this.game = game;
         this.chatDiv = document.querySelector(".chat");
         this.listen();
         this.history = [""];
         this.histState = 0;
-        $(".com_i").on("input", function () {
-            _this.history[_this.history.length - 1] = $(".com_i").val();
-            console.log(_this.history);
+        $(".com_i").on("input", () => {
+            this.history[this.history.length - 1] = $(".com_i").val();
+            console.log(this.history);
         });
         return;
     }
@@ -28,11 +27,10 @@ var Chat = class Chat {
     }
 
     listen() {
-        var _this = this;
         window.addEventListener(
             "wheel",
-            function (e) {
-                if (_this.game.eh.gameState !== "chat") {
+            (e) => {
+                if (this.game.eh.gameState !== "chat") {
                     e.preventDefault();
                 }
             },
@@ -55,8 +53,9 @@ var Chat = class Chat {
     }
 
     log(message) {
-        if(message.split(" ")[1].indexOf("<") == -1 && message.split(" ").indexOf(">") == -1)
-        $(".chat").append(`<span>${message}<br></span>`);
+        let elem = document.createElement("div");
+        elem.innerHTML = message + "<br>";
+        this.chatDiv.append(elem);
         this.scrollToBottom(this.chatDiv);
     }
 
@@ -69,6 +68,6 @@ var Chat = class Chat {
             return this.game.socket.emit("command", com);
         }
     }
-};
+}
 
 export { Chat };

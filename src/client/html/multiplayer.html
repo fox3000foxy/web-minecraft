@@ -46,7 +46,7 @@
     <br><br><label>Other</label><br><br>
     IP : <input class="input" id="ip"><br><br>
     Pass : <input class="input" id="port"><br><br><br><br>
-    <input type="button" onclick="location.href='./game.html?nick='+localStorage.getItem('username')+'§'+document.getElementById('ip').value+'§'+document.getElementById('port').value" value="Connect !" class="btn">
+    <input type="button" onclick="location.href='./game.html?server='+document.getElementById('ip').value+'&port='+document.getElementById('port').value+'&nick'+localStorage.getItem('username')" value="Connect !" class="btn">
     
 </body>
 <script>

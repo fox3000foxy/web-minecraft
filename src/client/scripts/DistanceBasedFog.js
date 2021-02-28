@@ -1,24 +1,30 @@
 import * as THREE from "three";
 
-var DistanceBasedFog = class DistanceBasedFog {
-    constructor() {
+class DistanceBasedFog {
+    constructor(game) {
+        this.game = game;
         this.view = new THREE.Vector3();
         this.farnear = new THREE.Vector2();
         this.color = new THREE.Vector4();
         return;
     }
 
+    update() {
+        this.view
+            .copy(this.game.camera.position)
+            .applyMatrix4(this.game.camera.matrixWorldInverse);
+    }
+
     addShaderToMaterial(material) {
-        var _this = this;
-        material.onBeforeCompile = function (shader) {
+        material.onBeforeCompile = (shader) => {
             shader.uniforms.u_viewPos = {
-                value: _this.view,
+                value: this.view,
             };
             shader.uniforms.u_fogColor = {
-                value: _this.color,
+                value: this.color,
             };
             shader.uniforms.u_farnear = {
-                value: _this.farnear,
+                value: this.farnear,
             };
             shader.fragmentShader = [
                 "uniform vec3 u_viewPos;",
@@ -50,6 +56,6 @@ var DistanceBasedFog = class DistanceBasedFog {
             );
         };
     }
-};
+}
 
 export { DistanceBasedFog };
