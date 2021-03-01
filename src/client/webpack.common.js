@@ -20,7 +20,8 @@ module.exports = {
         maxAssetSize: 1.5e6,
     },
     module: {
-        rules: [{
+        rules: [
+            {
                 loader: "worker-loader",
                 test: /\.worker\.js$/,
                 options: {
@@ -29,7 +30,8 @@ module.exports = {
             },
             {
                 test: /\.(scss)$/,
-                use: [{
+                use: [
+                    {
                         loader: "style-loader",
                     },
                     {
@@ -38,7 +40,7 @@ module.exports = {
                     {
                         loader: "postcss-loader",
                         options: {
-                            plugins: function() {
+                            plugins: function () {
                                 return [require("autoprefixer")];
                             },
                         },
@@ -54,9 +56,19 @@ module.exports = {
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
-                use: [{
-                    loader: "file-loader",
-                }, ],
+                use: [
+                    {
+                        loader: "file-loader",
+                    },
+                ],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                    },
+                ],
             },
         ],
     },
